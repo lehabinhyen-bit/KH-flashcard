@@ -75,20 +75,26 @@ body {
 .tab {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 0 16px;
-  height: 56px;
+  gap: 5px;
+  padding: 6px 12px;
+  min-height: 44px;
+  height: auto;
   border: none;
   background: none;
   font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-3);
   cursor: pointer;
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 180px;
+  text-align: left;
+  line-height: 1.4;
   border-bottom: 2px solid transparent;
   transition: all .15s;
   position: relative;
+  flex-shrink: 0;
 }
 .tab:hover { color: var(--text); background: var(--bg); }
 .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
@@ -713,6 +719,96 @@ body {
   min-height: 18px;
   text-align: center;
 }
+/* ── STATS MODAL ── */
+#stats-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#stats-overlay.open { display: flex; }
+.stats-box {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: var(--shadow-lg);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.stats-box h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.stats-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-3);
+  line-height: 1;
+}
+.stats-total {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.stat-chip {
+  border-radius: 10px;
+  padding: 14px 10px;
+  text-align: center;
+}
+.stat-chip .num { font-size: 28px; font-weight: 700; line-height: 1; }
+.stat-chip .lbl { font-size: 11px; margin-top: 4px; font-weight: 500; }
+.chip-g { background: #dcfce7; color: #15803d; }
+.chip-r { background: #fef9c3; color: #713f12; }
+.chip-h { background: #fee2e2; color: #991b1b; }
+.chip-n { background: var(--bg); color: var(--text-3); }
+.stats-tabs { display: flex; flex-direction: column; gap: 12px; }
+.stats-tab-row { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.stats-tab-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  padding: 9px 14px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.stats-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+}
+.stats-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+  display: flex;
+}
+.bar-g { background: #22c55e; }
+.bar-r { background: #eab308; }
+.bar-h { background: #ef4444; }
+.stats-counts {
+  font-size: 11px;
+  color: var(--text-3);
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.stats-counts span { display: flex; align-items: center; gap: 3px; }
 </style>
 </head>
 <body>
@@ -733,10 +829,22 @@ body {
   <div class="logo">Khải Huyền <span>/ Flashcard</span></div>
   <div class="tabs" id="tab-bar"></div>
   <button class="tab-add admin-only" onclick="addTab()" title="Thêm Khải mới">+</button>
+  <div style="display:flex;gap:8px;padding:0 8px;flex-shrink:0">
+    <button class="hdr-btn" onclick="openStats()">📊 Thống kê</button>
+  </div>
   <div style="display:flex;gap:8px;padding:0 8px;flex-shrink:0" class="admin-only">
-    <button class="hdr-btn" onclick="exportData()" title="Xuất data để gửi cho người khác">↑ Export</button>
-    <button class="hdr-btn" onclick="document.getElementById('import-input').click()" title="Nhận data từ người khác">↓ Import</button>
+    <button class="hdr-btn" onclick="exportData()">↑ Export</button>
+    <button class="hdr-btn" onclick="document.getElementById('import-input').click()">↓ Import</button>
     <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(event)">
+  </div>
+</div>
+ 
+<!-- STATS MODAL -->
+<div id="stats-overlay" onclick="closeStats(event)">
+  <div class="stats-box">
+    <h2>📊 Thống kê học tập <button class="stats-close" onclick="document.getElementById('stats-overlay').classList.remove('open')">✕</button></h2>
+    <div class="stats-total" id="stats-total"></div>
+    <div class="stats-tabs" id="stats-tabs"></div>
   </div>
 </div>
  
@@ -896,35 +1004,16 @@ body {
 </div>
  
 <script>
-// ── DATA ──────────────────────────────────────────────────────────
-let data = {
-  tabs: [
-    {
-      id: 't1',
-      name: 'Khải 1',
-      cards: [
-        { id:'c1', ref:'Khải 1:1', title:'Khải thị của Đức Chúa Jesus Christ', verse:'', analysis:'' },
-        { id:'c2', ref:'Khải 1:2', title:'Ngôi lời của Đức Chúa Trời và chứng cớ của Đức Chúa Jesus', verse:'', analysis:'' },
-        { id:'c3', ref:'Khải 1:3', title:'Những người giữ Ngôi lời sẽ nhận được phước', verse:'', analysis:'' },
-        { id:'c4', ref:'Khải 1:4', title:'Bảy hội thánh ở xứ A-si', verse:'', analysis:'' },
-        { id:'c5', ref:'Khải 1:5–6', title:'Nước và thầy tế lễ của Đức Chúa Trời', verse:'', analysis:'' },
-        { id:'c6', ref:'Khải 1:7', title:'Chúa Jesus đến giữa những đám mây và những kẻ đã đâm Ngài', verse:'', analysis:'' },
-        { id:'c7', ref:'Khải 1:8', title:'An-pha (A) và Ô-mê-ga (Ω)', verse:'', analysis:'' },
-        { id:'c8', ref:'Khải 1:9', title:'Sứ đồ Giăng và đảo Bát-mô', verse:'', analysis:'' },
-        { id:'c9', ref:'Khải 1:10–11', title:'Giăng được Đức Thánh Linh cảm hóa và nghe có tiếng kêu vang', verse:'', analysis:'' },
-        { id:'c10', ref:'Khải 1:12–16', title:'7 chân đèn vàng và Đấng giống như Con Người', verse:'', analysis:'' },
-        { id:'c11', ref:'Khải 1:17–18', title:'Giăng mới nhận được sự lựa chọn của Chúa Jesus', verse:'', analysis:'' },
-        { id:'c12', ref:'Khải 1:19–20', title:'Nội dung của bức thư và Bí mật của 7 ngôi sao, 7 chân đèn vàng', verse:'', analysis:'' },
-      ]
-    }
-  ]
-};
+// ── DEFAULT DATA (nhúng sẵn, ai vào link cũng thấy) ──────────────
+const DEFAULT_DATA = {"tabs":[{"id":"t1","name":"Khải 1:1-8 - Tóm Tắt & Kết Luận Toàn Đoạn Khải Huyền","cards":[{"id":"c1","ref":"Khải 1:1","title":"Khải thị của Đức Chúa Jesus Christ","verse":"(1) Sự <font color=\"#b91c1c\"><u>mặc-thị (khải-thị)</u> </font>của Đức Chúa Jêsus-Christ mà <font color=\"#b91c1c\"><u>Đức Chúa Trời</u></font> đã ban cho <font color=\"#b91c1c\"><u>Ngài</u></font> đặng đem tỏ ra cùng tôi-tớ Ngài <font color=\"#b91c1c\"><u>những điều kíp phải xảy đến</u></font>, thì Ngài đã sai <u><font color=\"#b91c1c\">thiên-sứ</font></u> đến tỏ những điều đó cho <font color=\"#b91c1c\"><u>Giăng</u></font>, <u><font color=\"#b91c1c\">tôi-tớ</font></u> Ngài","analysis":"<b>1. Sự khải thị &amp; tầm quan trọng của khải thị: </b><div><ul><li>Chúa Jesus tháo ấn = khải thị (mở ra và cho thấy)</li><li>Tầm quan trọng của Khải thị: Biết được ĐCT thật → cơ hội trở thành con cái của ĐCT</li></ul><div><br></div><b>2. Quá trình truyền tải khải thị: </b>ĐCT → Chúa Jesus → Thiên sứ → Giăng mới → tôi tớ<div><div><br></div><b>3. Những điều kíp phải xảy đến: </b>Sự kiện toàn đoạn Khải huyền <font color=\"#1a56a0\" style=\"font-style: italic;\">(Khải 1-22) </font>→ bỏ đạo, huỷ diệt, cứu rỗi</div></div><div><br></div><div><b>4. Tôi tớ Ngài: </b>YS thuộc linh mới = 12 chi phái (144,000 + đoàn dân áo trắng) &lt;<i><font color=\"#1a56a0\">Khải 7:3-4&gt;</font></i></div>"},{"id":"c2","ref":"Khải 1:2","title":"Ngôi lời của Đức Chúa Trời và chứng cớ của Đức Chúa Jesus","verse":"(2) là kẻ đã rao-truyền <font color=\"#b91c1c\"><u>lời Đức Chúa Trời</u> </font>và chứng-cớ của Đức Chúa Jêsus-Christ, <font color=\"#b91c1c\"><u>về mọi điều mình đã thấy</u></font>","analysis":"<ul><li>Lời của Đức Chúa Trời: Ngôi lời khải thị trong <em><font color=\"#1a56a0\">&lt;Khải 10&gt;</font></em></li><li>Về mọi điều mình đã thấy: Hiện thực toàn đoạn Khải Huyền <em><font color=\"#1a56a0\">&lt;Khải 22:8&gt;</font></em></li><li>Giăng mới: Sứ giả thay lời của Chúa Jesus <em><font color=\"#1a56a0\">&lt;Khải 22:16&gt;</font></em></li></ul>"},{"id":"c3","ref":"Khải 1:3","title":"Những người giữ Ngôi lời trong sách Khải Huyền sẽ nhận được phước","verse":"(3) <u><font color=\"#b91c1c\">Phước</font></u> cho <font color=\"#b91c1c\"><u>kẻ đọc</u></font> cùng những <font color=\"#b91c1c\"><u>kẻ nghe</u></font> lời tiên-tri này, và <font color=\"#b91c1c\"><u>giữ</u> </font>theo điều đã viết ra đây. Vì thì-giờ đã gần rồi.","analysis":"<b>1. Kẻ đọc:</b> Giăng mới = người nhận và nuốt quyển sách mở trong <font color=\"#1a56a0\"><i>&lt;Khải 10&gt;</i></font>, sẽ có thể rao truyền ý nghĩa thật sự của Khải Huyền<div><br><div><b>2. Kẻ nghe:</b> Nhiều dân, nhiều nước, nhiều tiếng, nhiều vua <i><font color=\"#1a56a0\">&lt;Khải 10:11&gt;</font></i></div><div><br></div><div><b>3. Kẻ giữ:</b> Người ghi khắc luật pháp của Đức Chúa Trời vào trong trí và trong lòng = 12 chi phái (144,000 + đoàn dân áo trắng)</div><div><br></div><div><b>4. Phước:</b> thiên đàng và sự sống đời đời</div></div>"},{"id":"c4","ref":"Khải 1:4","title":"Bảy hội thánh ở xứ A-si","verse":"(4) Giăng gởi cho <font color=\"#b91c1c\"><u>bảy Hội-thánh</u></font> ở xứ A-si: Nguyền xin ân-điển và sự bình-an ban cho anh em từ nơi Đấng hiện có, đã có, và còn đến, cùng từ nơi bảy vì thần ở trước ngôi Ngài,","analysis":"<ul><li>Thực thể → Đền tạm Jang Mak Song Jeon có 7 sứ giả</li></ul>"},{"id":"c5","ref":"Khải 1:5–6","title":"Nước và thầy tế lễ của Đức Chúa Trời","verse":"(5) lại từ nơi Đức Chúa Jêsus-Christ là Đấng làm chứng thành-tín, sinh đầu nhứt từ trong kẻ chết và làm Chúa của các vua trong thế-gian! <div>(6) Đấng yêu-thương chúng ta, đã lấy <font color=\"#b91c1c\"><u>huyết mình rửa sạch tội-lỗi chúng ta</u></font>, và làm cho chúng ta nên <font color=\"#b91c1c\"><u>nước Ngài</u></font>, nên <font color=\"#b91c1c\"><u>thầy tế-lễ</u></font> của Đức Chúa Trời là Cha Ngài, đáng được sự vinh-hiển và quyền-năng đời đời vô-cùng! A-men.</div>","analysis":"<ul><li>Hiệu lực huyết của Chúa Jesus: Thời Khải Huyền ứng nghiệm</li><li>2 đối tượng:<ul><li>Nước và thầy tế lễ <em><font color=\"#1a56a0\">&lt;Khải 5:9-10&gt;</font></em></li><li>Đoàn dân áo trắng ~ dùng huyết chuộc tội lỗi <em><font color=\"#1a56a0\">&lt;Khải 7:14&gt;</font></em></li></ul></li></ul>"},{"id":"c6","ref":"Khải 1:7","title":"Chúa Jesus đến giữa những đám mây và những kẻ đã đâm Ngài","verse":"(7) Kìa, <font color=\"#b91c1c\"><u>Ngài đến giữa những đám mây</u></font>, mọi mắt sẽ trông thấy, cả đến <font color=\"#b91c1c\"><u>những kẻ đã đâm Ngài</u></font> cũng trông thấy; <font color=\"#b91c1c\"><u>hết thảy các chi họ trong thế-gian sẽ than-khóc</u></font> vì cớ Ngài. Quả thật vậy. A-men!","analysis":"<b>1. Ngài đến giữa những đám mây: </b>đến bằng thể thần linh, không thể nhìn thấy được <font color=\"#1a56a0\" style=\"font-style:italic\">&lt;Công 1:9-11&gt;</font><div><br><div><b>2. Những kẻ đã đâm Chúa Jesus:</b> Con thú từ dưới vực sâu lên</div><div><ul><li>Thời giáng trần: những người đâm Chúa Jesus (người có ĐCT ở cùng) cũng chính là những người đâm ĐCT</li><li>Thời tái lâm: những người đâm Người Chiến Thắng (người có Chúa Jesus ở cùng) cũng chính là những người đâm Chúa Jesus</li></ul><div><br></div><b>3. Hết thảy các chi họ trong thế gian sẽ than khóc: </b>2 đối tượng</div><div><ul><li>Những thánh đồ trong đền tạm 7 chân đèn vàng nhận được sự lựa chọn nhưng đã bỏ đạo</li><li>Những kẻ dù đã nghe Ngôi lời khải thị nhưng vẫn ngoảnh mặt làm ngơ</li></ul></div></div>"},{"id":"c7","ref":"Khải 1:8","title":"An-pha (A) và Ô-mê-ga (Ω)","verse":"(8) Chúa là Đức Chúa Trời, Đấng hiện có, đã có, và còn đến là Đấng Toàn-năng, phán rằng: Ta là <font color=\"#b91c1c\"><u>An-pha</u></font> và <u><font color=\"#b91c1c\">Ô-mê-ga</font></u>","analysis":"<b>1. An-pha và Ô-mê-ga:</b> <div><ul><li>Bắt đầu (tiên tri)</li><li>Kết thúc (ứng nghiệm)</li></ul><div><br></div><div><b>2. Đấng sau này sẽ đến:</b> Đức Chúa Trời → 12 chi phái 144,000 được đóng ấn và đoàn dân áo trắng</div></div>"}]}]};
+ 
+let data = JSON.parse(JSON.stringify(DEFAULT_DATA)); // deep copy
 let status = {};
 let curTab = 0, curCard = 0, curFace = 1;
 let editId = null, editNew = false;
 let modalMode = null, modalTabIdx = null;
  
-// Load
+// Load từ localStorage nếu có (chỉ dùng cho admin đã chỉnh sửa trên máy)
 try {
   const d = JSON.parse(localStorage.getItem('kh_fc3') || 'null');
   if (d && d.tabs) data = d;
@@ -1295,6 +1384,70 @@ document.getElementById('modal-input').addEventListener('keydown', e => {
   if (e.key === 'Escape') modalCancel();
 });
  
+// ── STATS ─────────────────────────────────────────────────────────
+function openStats() {
+  // Tổng toàn bộ
+  let totalG=0, totalR=0, totalH=0, totalN=0, totalAll=0;
+  data.tabs.forEach(t => {
+    t.cards.forEach(c => {
+      const s = status[c.id] || '';
+      totalAll++;
+      if(s==='g') totalG++;
+      else if(s==='r') totalR++;
+      else if(s==='h') totalH++;
+      else totalN++;
+    });
+  });
+ 
+  // Tổng header
+  const tot = document.getElementById('stats-total');
+  tot.innerHTML = `
+    <div class="stat-chip chip-g"><div class="num">${totalG}</div><div class="lbl">✓ Đã thuộc</div></div>
+    <div class="stat-chip chip-r"><div class="num">${totalR}</div><div class="lbl">↻ Cần ôn</div></div>
+    <div class="stat-chip chip-h"><div class="num">${totalH}</div><div class="lbl">✗ Chưa thuộc</div></div>
+  `;
+ 
+  // Từng tab
+  const tabs = document.getElementById('stats-tabs');
+  tabs.innerHTML = '';
+  data.tabs.forEach(t => {
+    let g=0,r=0,h=0,n=0;
+    t.cards.forEach(c => {
+      const s = status[c.id] || '';
+      if(s==='g') g++; else if(s==='r') r++; else if(s==='h') h++; else n++;
+    });
+    const total = t.cards.length;
+    const pG = total ? (g/total*100) : 0;
+    const pR = total ? (r/total*100) : 0;
+    const pH = total ? (h/total*100) : 0;
+    const pN = total ? (n/total*100) : 0;
+    tabs.innerHTML += `
+      <div class="stats-tab-row">
+        <div class="stats-tab-name">${t.name} <span style="color:var(--text-3);font-weight:400">(${total} thẻ)</span></div>
+        <div class="stats-bar-row">
+          <div class="stats-bar">
+            <div class="bar-g" style="width:${pG}%"></div>
+            <div class="bar-r" style="width:${pR}%"></div>
+            <div class="bar-h" style="width:${pH}%"></div>
+          </div>
+          <div class="stats-counts">
+            <span style="color:#15803d">✓${g}</span>
+            <span style="color:#713f12">↻${r}</span>
+            <span style="color:#991b1b">✗${h}</span>
+            <span style="color:var(--text-3)">·${n}</span>
+          </div>
+        </div>
+      </div>`;
+  });
+ 
+  document.getElementById('stats-overlay').classList.add('open');
+}
+ 
+function closeStats(e) {
+  if(e.target === document.getElementById('stats-overlay'))
+    document.getElementById('stats-overlay').classList.remove('open');
+}
+ 
 // ── EXPORT / IMPORT ───────────────────────────────────────────────
 function exportData() {
   const payload = { data, status, exportedAt: new Date().toISOString() };
@@ -1322,7 +1475,7 @@ function importData(event) {
       save();
       cancelEdit();
       renderAll();
-      alert('Import thành công!');
+      alert('Import thành công! ✓');
     } catch(err) {
       alert('Lỗi đọc file: ' + err.message);
     }
@@ -1365,12 +1518,10 @@ function checkPw() {
  
   if (input === 'donganadmin') {
     isAdmin = true;
-    try { sessionStorage.setItem('kh_auth', 'admin'); } catch(e) {}
     document.getElementById('pw-screen').style.display = 'none';
     renderAll();
   } else if (input === 'dongan') {
     isAdmin = false;
-    try { sessionStorage.setItem('kh_auth', 'view'); } catch(e) {}
     document.getElementById('pw-screen').style.display = 'none';
     renderAll();
   } else {
@@ -1388,19 +1539,8 @@ document.getElementById('pw-input').addEventListener('keydown', e => {
   document.getElementById('pw-err').textContent = '';
 });
  
-// Boot — check session
-const savedAuth = sessionStorage.getItem('kh_auth');
-if (savedAuth === 'admin') {
-  isAdmin = true;
-  document.getElementById('pw-screen').style.display = 'none';
-  renderAll();
-} else if (savedAuth === 'view') {
-  isAdmin = false;
-  document.getElementById('pw-screen').style.display = 'none';
-  renderAll();
-} else {
-  document.getElementById('pw-input').focus();
-}
+// Boot — luôn hiện màn hình password (không dùng session)
+document.getElementById('pw-input').focus();
 </script>
 </body>
 </html>
