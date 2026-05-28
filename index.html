@@ -28,16 +28,16 @@
   --shadow: 0 2px 20px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.04);
   --shadow-lg: 0 8px 40px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
 }
-
+ 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
 body {
   font-family: 'DM Sans', sans-serif;
   background: var(--bg);
   min-height: 100vh;
   color: var(--text);
 }
-
+ 
 /* ── HEADER ── */
 .header {
   background: var(--surface);
@@ -60,7 +60,7 @@ body {
   letter-spacing: .02em;
 }
 .logo span { color: var(--text-3); font-weight: 400; }
-
+ 
 /* ── TABS ── */
 .tabs {
   display: flex;
@@ -71,7 +71,7 @@ body {
   scrollbar-width: none;
 }
 .tabs::-webkit-scrollbar { display: none; }
-
+ 
 .tab {
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@ body {
   font-weight: 400;
 }
 .tab.active .tab-count { background: var(--accent-light); color: var(--accent); }
-
+ 
 .tab-edit-btn {
   font-size: 11px;
   opacity: 0;
@@ -115,7 +115,7 @@ body {
 }
 .tab:hover .tab-edit-btn { opacity: 1; }
 .tab-edit-btn:hover { background: var(--border); color: var(--text); }
-
+ 
 .tab-add {
   padding: 0 14px;
   height: 56px;
@@ -128,7 +128,7 @@ body {
   flex-shrink: 0;
 }
 .tab-add:hover { color: var(--accent); }
-
+ 
 .hdr-btn {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px;
@@ -144,7 +144,7 @@ body {
   letter-spacing: .01em;
 }
 .hdr-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
-
+ 
 /* ── MAIN LAYOUT ── */
 .layout {
   display: grid;
@@ -154,16 +154,16 @@ body {
   margin: 0 auto;
   padding: 28px 24px;
 }
-
+ 
 /* ── CARD STUDY ── */
 .study-area { display: flex; flex-direction: column; gap: 20px; }
-
+ 
 .progress-row { display: flex; align-items: center; gap: 12px; }
 .progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; }
 .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s; }
 .progress-label { font-size: 12px; color: var(--text-3); white-space: nowrap; }
 .progress-done { font-size: 12px; color: var(--accent); font-weight: 600; }
-
+ 
 /* Card flip */
 .card-wrap {
   perspective: 1400px;
@@ -179,7 +179,7 @@ body {
 }
 .card.face2 { transform: rotateY(120deg); }
 .card.face3 { transform: rotateY(240deg); }
-
+ 
 .face {
   position: absolute;
   width: 100%;
@@ -195,7 +195,7 @@ body {
 .face-1 { background: var(--surface); transform: rotateY(0deg); }
 .face-2 { background: var(--surface); transform: rotateY(-120deg); }
 .face-3 { background: var(--surface); transform: rotateY(-240deg); }
-
+ 
 .face-indicator {
   display: flex;
   gap: 6px;
@@ -210,7 +210,7 @@ body {
 .fi-dot.f1 { background: var(--accent); }
 .fi-dot.f2 { background: var(--gold); }
 .fi-dot.f3 { background: var(--rose); }
-
+ 
 .face-label {
   font-size: 10px;
   font-weight: 700;
@@ -221,14 +221,14 @@ body {
 .face-1 .face-label { color: var(--accent); }
 .face-2 .face-label { color: var(--gold); }
 .face-3 .face-label { color: var(--rose); }
-
+ 
 .card-ref {
   font-size: 12px;
   color: var(--text-3);
   margin-bottom: 10px;
   font-weight: 500;
 }
-
+ 
 .card-title {
   font-family: 'Lora', serif;
   font-size: 22px;
@@ -238,7 +238,7 @@ body {
   display: flex;
   align-items: center;
 }
-
+ 
 .card-verse {
   font-family: 'Lora', serif;
   font-size: 16px;
@@ -258,7 +258,7 @@ body {
   cursor: pointer;
 }
 .card-verse.empty:hover { color: var(--accent); }
-
+ 
 .card-analysis {
   font-size: 14px;
   line-height: 1.75;
@@ -274,14 +274,14 @@ body {
   font-size: 14px;
 }
 .card-analysis.empty:hover { color: var(--rose); }
-
+ 
 .card-hint {
   font-size: 11px;
   color: var(--text-3);
   text-align: right;
   margin-top: 12px;
 }
-
+ 
 /* Nav */
 .nav-row { display: flex; align-items: center; justify-content: center; gap: 10px; }
 .btn { 
@@ -305,7 +305,7 @@ body {
   padding: 9px 28px;
 }
 .btn-primary:hover { background: #1e3329; border-color: #1e3329; color: #fff; }
-
+ 
 /* Status */
 .status-row { display: flex; gap: 8px; justify-content: center; }
 .btn-status {
@@ -326,10 +326,10 @@ body {
 .btn-status.r:hover, .btn-status.r.on { background: #fef9c3; border-color: #eab308; color: #713f12; }
 .btn-status.h { border-color: #fca5a5; }
 .btn-status.h:hover, .btn-status.h.on { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
-
+ 
 /* ── SIDEBAR ── */
 .sidebar { display: flex; flex-direction: column; gap: 16px; }
-
+ 
 .panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -363,7 +363,7 @@ body {
   transition: all .15s;
 }
 .panel-header button:hover { background: var(--bg); color: var(--accent); border-color: var(--accent); }
-
+ 
 .card-list { max-height: 420px; overflow-y: auto; }
 .list-item {
   display: flex;
@@ -397,7 +397,7 @@ body {
 }
 .list-item:hover .list-btn { opacity: 1; }
 .list-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-light); }
-
+ 
 .btn-add-card {
   width: 100%;
   padding: 12px;
@@ -415,7 +415,7 @@ body {
   border-top: 1px solid var(--border);
 }
 .btn-add-card:hover { background: var(--bg); color: var(--accent); }
-
+ 
 /* ── FORMAT TOOLBAR ── */
 .fmt-toolbar {
   display: flex;
@@ -443,7 +443,7 @@ body {
 .fmt-btn.fmt-i { font-style: italic; }
 .fmt-btn.fmt-u { text-decoration: underline; }
 .fmt-sep { width: 1px; height: 20px; background: var(--border); margin: 3px 2px; }
-
+ 
 .clr-dot {
   width: 18px;
   height: 18px;
@@ -455,7 +455,7 @@ body {
   padding: 0;
 }
 .clr-dot:hover { transform: scale(1.25); border-color: var(--text) !important; }
-
+ 
 /* ── EDIT PANEL ── */
 .edit-panel {
   background: var(--surface);
@@ -491,7 +491,7 @@ body {
 .field input:focus, .field textarea:focus { border-color: var(--accent); background: var(--surface); }
 .field textarea { min-height: 90px; }
 .field textarea.verse { font-family: 'Lora', serif; font-style: italic; min-height: 110px; }
-
+ 
 .rich-editor {
   width: 100%;
   min-height: 90px;
@@ -528,7 +528,7 @@ body {
   margin: 3px 0;
   line-height: 1.65;
 }
-
+ 
 .edit-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
 .btn-save {
   font-family: 'DM Sans', sans-serif;
@@ -568,7 +568,7 @@ body {
   transition: all .15s;
 }
 .btn-delete:hover { background: var(--rose-light); }
-
+ 
 /* keyboard shortcut chip */
 .kbd {
   display: inline-block;
@@ -580,14 +580,14 @@ body {
   color: var(--text-3);
   font-family: monospace;
 }
-
+ 
 .hidden { display: none !important; }
-
+ 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
+ 
 /* Modal for tab rename */
 .modal-overlay {
   position: fixed; inset: 0;
@@ -617,14 +617,14 @@ body {
 }
 .modal input:focus { border-color: var(--accent); }
 .modal-actions { display: flex; gap: 8px; }
-
+ 
 @media (max-width: 800px) {
   .layout { grid-template-columns: 1fr; }
   .sidebar { order: -1; }
   .card { height: 320px; }
   .card-title { font-size: 18px; }
 }
-
+ 
 /* ── PASSWORD SCREEN ── */
 #pw-screen {
   position: fixed;
@@ -716,7 +716,7 @@ body {
 </style>
 </head>
 <body>
-
+ 
 <!-- PASSWORD SCREEN -->
 <div id="pw-screen">
   <div class="pw-box">
@@ -728,18 +728,18 @@ body {
     <div class="pw-err" id="pw-err"></div>
   </div>
 </div>
-
+ 
 <div class="header">
   <div class="logo">Khải Huyền <span>/ Flashcard</span></div>
   <div class="tabs" id="tab-bar"></div>
-  <button class="tab-add" onclick="addTab()" title="Thêm Khải mới">+</button>
-  <div style="display:flex;gap:8px;padding:0 8px;flex-shrink:0">
+  <button class="tab-add admin-only" onclick="addTab()" title="Thêm Khải mới">+</button>
+  <div style="display:flex;gap:8px;padding:0 8px;flex-shrink:0" class="admin-only">
     <button class="hdr-btn" onclick="exportData()" title="Xuất data để gửi cho người khác">↑ Export</button>
     <button class="hdr-btn" onclick="document.getElementById('import-input').click()" title="Nhận data từ người khác">↓ Import</button>
     <input type="file" id="import-input" accept=".json" style="display:none" onchange="importData(event)">
   </div>
 </div>
-
+ 
 <div class="layout">
   <!-- STUDY -->
   <div class="study-area">
@@ -748,7 +748,7 @@ body {
       <span class="progress-label" id="prog-text">0 / 0</span>
       <span class="progress-done" id="prog-done"></span>
     </div>
-
+ 
     <div class="card-wrap" onclick="nextFace()">
       <div class="card" id="card">
         <!-- FACE 1: TITLE -->
@@ -789,19 +789,19 @@ body {
         </div>
       </div>
     </div>
-
+ 
     <div class="nav-row">
       <button class="btn" onclick="prevCard()" id="btn-prev">← Trước</button>
       <button class="btn-primary" onclick="nextFace()" id="btn-face">Xem tiếp</button>
       <button class="btn" onclick="nextCard()" id="btn-next">Tiếp →</button>
     </div>
-
+ 
     <div class="status-row">
       <button class="btn-status g" id="s-g" onclick="mark('g')">✓ Đã thuộc</button>
       <button class="btn-status r" id="s-r" onclick="mark('r')">↻ Cần ôn</button>
       <button class="btn-status h" id="s-h" onclick="mark('h')">✗ Chưa thuộc</button>
     </div>
-
+ 
     <div style="text-align:center;font-size:11px;color:var(--text-3)">
       <span class="kbd">←</span> <span class="kbd">→</span> điều hướng &nbsp;·&nbsp;
       <span class="kbd">Space</span> lật thẻ &nbsp;·&nbsp;
@@ -810,7 +810,7 @@ body {
       <span class="kbd">3</span> chưa thuộc
     </div>
   </div>
-
+ 
   <!-- SIDEBAR -->
   <div class="sidebar">
     <!-- Card list -->
@@ -821,9 +821,9 @@ body {
       </div>
       <div class="card-list" id="card-list"></div>
     </div>
-
+ 
     <!-- Edit panel -->
-    <div class="edit-panel hidden" id="edit-panel">
+    <div class="edit-panel hidden admin-only" id="edit-panel">
       <h3 id="edit-heading">Chỉnh sửa thẻ</h3>
       <div class="field">
         <label>Tham chiếu (VD: Khải 1:1)</label>
@@ -881,7 +881,7 @@ body {
     </div>
   </div>
 </div>
-
+ 
 <!-- Modal tab rename -->
 <div class="modal-overlay hidden" id="modal">
   <div class="modal">
@@ -894,7 +894,7 @@ body {
     </div>
   </div>
 </div>
-
+ 
 <script>
 // ── DATA ──────────────────────────────────────────────────────────
 let data = {
@@ -923,7 +923,7 @@ let status = {};
 let curTab = 0, curCard = 0, curFace = 1;
 let editId = null, editNew = false;
 let modalMode = null, modalTabIdx = null;
-
+ 
 // Load
 try {
   const d = JSON.parse(localStorage.getItem('kh_fc3') || 'null');
@@ -931,17 +931,17 @@ try {
   const s = JSON.parse(localStorage.getItem('kh_fc3_status') || '{}');
   status = s;
 } catch(e) {}
-
+ 
 function save() {
   try {
     localStorage.setItem('kh_fc3', JSON.stringify(data));
     localStorage.setItem('kh_fc3_status', JSON.stringify(status));
   } catch(e) {}
 }
-
+ 
 function cards() { return data.tabs[curTab]?.cards || []; }
 function card() { return cards()[curCard]; }
-
+ 
 // ── TABS ──────────────────────────────────────────────────────────
 function renderTabs() {
   const bar = document.getElementById('tab-bar');
@@ -953,7 +953,7 @@ function renderTabs() {
     btn.innerHTML = `
       ${t.name}
       <span class="tab-count">${t.cards.length}</span>
-      <button class="tab-edit-btn" onclick="event.stopPropagation();openTabEdit(${i})">✎</button>
+      <button class="tab-edit-btn admin-only" onclick="event.stopPropagation();openTabEdit(${i})">✎</button>
     `;
     btn.onclick = (e) => {
       if (e.target.classList.contains('tab-edit-btn')) return;
@@ -964,7 +964,7 @@ function renderTabs() {
     bar.appendChild(btn);
   });
 }
-
+ 
 function addTab() {
   modalMode = 'add';
   document.getElementById('modal-title').textContent = 'Thêm Khải mới';
@@ -974,7 +974,7 @@ function addTab() {
   document.getElementById('modal-input').focus();
   document.getElementById('modal-input').select();
 }
-
+ 
 function openTabEdit(idx) {
   modalMode = 'edit';
   modalTabIdx = idx;
@@ -985,7 +985,7 @@ function openTabEdit(idx) {
   document.getElementById('modal-input').focus();
   document.getElementById('modal-input').select();
 }
-
+ 
 function modalConfirm() {
   const name = document.getElementById('modal-input').value.trim();
   if (!name) return;
@@ -1000,7 +1000,7 @@ function modalConfirm() {
   document.getElementById('modal').classList.add('hidden');
   renderAll();
 }
-
+ 
 function modalDelete() {
   if (data.tabs.length <= 1) { alert('Cần có ít nhất 1 tab'); return; }
   if (!confirm(`Xóa tab "${data.tabs[modalTabIdx].name}" và tất cả thẻ trong đó?`)) return;
@@ -1011,11 +1011,11 @@ function modalDelete() {
   document.getElementById('modal').classList.add('hidden');
   renderAll();
 }
-
+ 
 function modalCancel() {
   document.getElementById('modal').classList.add('hidden');
 }
-
+ 
 // ── CARD LIST ─────────────────────────────────────────────────────
 function renderList() {
   const list = document.getElementById('card-list');
@@ -1039,21 +1039,21 @@ function renderList() {
     list.appendChild(row);
   });
 }
-
+ 
 // ── STUDY ─────────────────────────────────────────────────────────
 function renderStudy() {
   const cs = cards();
   const total = cs.length;
   const done = cs.filter(c => status[c.id] === 'g').length;
-
+ 
   document.getElementById('prog-fill').style.width = total ? ((curCard+1)/total*100)+'%' : '0%';
   document.getElementById('prog-text').textContent = total ? `${curCard+1} / ${total}` : '0 / 0';
   document.getElementById('prog-done').textContent = done ? `${done} đã thuộc` : '';
-
+ 
   // face rotation
   const cardEl = document.getElementById('card');
   cardEl.className = 'card' + (curFace === 2 ? ' face2' : curFace === 3 ? ' face3' : '');
-
+ 
   // face indicators
   ['1','2','3'].forEach(n => {
     document.getElementById(`fi1-${n}`).className = 'fi-dot' + (curFace===1&&n==='1'?' f1':curFace===2&&n==='2'?' f1':curFace===3&&n==='3'?' f1':'');
@@ -1068,7 +1068,7 @@ function renderStudy() {
   document.getElementById('fi3-1').className = 'fi-dot' + (curFace===1?' f3':'');
   document.getElementById('fi3-2').className = 'fi-dot' + (curFace===2?' f3':'');
   document.getElementById('fi3-3').className = 'fi-dot' + (curFace===3?' f3':'');
-
+ 
   if (!total) {
     ['f1-ref','f2-ref','f3-ref'].forEach(id => document.getElementById(id).textContent = '');
     document.getElementById('f1-title').textContent = 'Chưa có thẻ — nhấn "+ Thêm thẻ"';
@@ -1078,70 +1078,72 @@ function renderStudy() {
     document.getElementById('btn-next').disabled = true;
     return;
   }
-
+ 
   const c = cs[curCard];
   document.getElementById('f1-ref').textContent = c.ref;
   document.getElementById('f2-ref').textContent = c.ref;
   document.getElementById('f3-ref').textContent = c.ref;
   document.getElementById('f1-title').textContent = c.title;
-
+ 
   const verseEl = document.getElementById('f2-verse');
   if (c.verse && c.verse !== '<br>') {
     verseEl.innerHTML = c.verse;
     verseEl.className = 'card-verse';
     verseEl.onclick = null;
   } else {
-    verseEl.textContent = '↓ Chưa có trích đoạn — click Sửa để điền';
+    verseEl.innerHTML = isAdmin ? '↓ Chưa có trích đoạn — click Sửa để điền' : '(Chưa có trích đoạn)';
     verseEl.className = 'card-verse empty';
-    verseEl.onclick = (e) => { e.stopPropagation(); openEdit(c.id); };
+    if (isAdmin) verseEl.onclick = (e) => { e.stopPropagation(); openEdit(c.id); };
+    else verseEl.onclick = null;
   }
-
+ 
   const anaEl = document.getElementById('f3-analysis');
   if (c.analysis && c.analysis !== '<br>') {
     anaEl.innerHTML = c.analysis;
     anaEl.className = 'card-analysis';
     anaEl.onclick = null;
   } else {
-    anaEl.textContent = '↓ Chưa có giải nghĩa — click Sửa để điền';
+    anaEl.innerHTML = isAdmin ? '↓ Chưa có giải nghĩa — click Sửa để điền' : '(Chưa có giải nghĩa)';
     anaEl.className = 'card-analysis empty';
-    anaEl.onclick = (e) => { e.stopPropagation(); openEdit(c.id); };
+    if (isAdmin) anaEl.onclick = (e) => { e.stopPropagation(); openEdit(c.id); };
+    else anaEl.onclick = null;
   }
-
+ 
   document.getElementById('btn-prev').disabled = curCard === 0;
   document.getElementById('btn-next').disabled = curCard === total - 1;
-
+ 
   const s = status[c.id] || '';
   document.getElementById('s-g').classList.toggle('on', s==='g');
   document.getElementById('s-r').classList.toggle('on', s==='r');
   document.getElementById('s-h').classList.toggle('on', s==='h');
-
+ 
   const faceLabels = ['Xem trích đoạn', 'Xem giải nghĩa', 'Quay lại'];
   document.getElementById('btn-face').textContent = faceLabels[curFace - 1];
 }
-
+ 
 function nextFace() {
   if (!cards().length) return;
   curFace = curFace === 3 ? 1 : curFace + 1;
   renderStudy();
 }
-
+ 
 function nextCard() {
   if (curCard < cards().length - 1) { curCard++; curFace = 1; renderStudy(); renderList(); }
 }
 function prevCard() {
   if (curCard > 0) { curCard--; curFace = 1; renderStudy(); renderList(); }
 }
-
+ 
 function mark(type) {
   const c = card(); if (!c) return;
   status[c.id] = status[c.id] === type ? '' : type;
   save(); renderStudy(); renderList();
   if (type === 'g' && curCard < cards().length - 1) setTimeout(nextCard, 360);
 }
-
+ 
 // ── FORMAT ────────────────────────────────────────────────────────
 let savedRanges = {};
-
+ 
 function fmt(editorId, cmd) {
   const el = document.getElementById(editorId);
   el.focus();
@@ -1162,13 +1164,13 @@ function fmt(editorId, cmd) {
   const cmdMap = { b: 'bold', i: 'italic', u: 'underline' };
   document.execCommand(cmdMap[cmd], false, null);
 }
-
+ 
 // Auto-bullet: type "- " at start of line → convert to list item
 // Auto-arrow: type "->" → replace with "→"
 document.addEventListener('keydown', e => {
   const active = document.activeElement;
   if (!active || !active.classList.contains('rich-editor')) return;
-
+ 
   // Ctrl/Cmd shortcuts
   if (e.ctrlKey || e.metaKey) {
     if (e.key === 'b') { e.preventDefault(); fmt(active.id, 'b'); }
@@ -1176,12 +1178,12 @@ document.addEventListener('keydown', e => {
     if (e.key === 'u') { e.preventDefault(); fmt(active.id, 'u'); }
     return;
   }
-
+ 
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
   const range = sel.getRangeAt(0);
   const node = range.startContainer;
-
+ 
   // Auto-arrow: "->" → "→"
   if (e.key === '>') {
     if (node.nodeType === Node.TEXT_NODE) {
@@ -1198,7 +1200,7 @@ document.addEventListener('keydown', e => {
       }
     }
   }
-
+ 
   // Auto-bullet on Space after "-" at start of block
   if (e.key === ' ') {
     if (node.nodeType !== Node.TEXT_NODE) return;
@@ -1213,7 +1215,7 @@ document.addEventListener('keydown', e => {
     }
   }
 }, true);
-
+ 
 // ── EDIT ──────────────────────────────────────────────────────────
 function openEdit(id) {
   editId = id;
@@ -1228,7 +1230,7 @@ function openEdit(id) {
   document.getElementById('edit-panel').classList.remove('hidden');
   document.getElementById('edit-panel').scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
-
+ 
 function addCard() {
   editId = null; editNew = true;
   document.getElementById('edit-heading').textContent = 'Thêm thẻ mới';
@@ -1240,14 +1242,14 @@ function addCard() {
   document.getElementById('edit-panel').classList.remove('hidden');
   document.getElementById('e-ref').focus();
 }
-
+ 
 function saveCard() {
   const ref = document.getElementById('e-ref').value.trim();
   const title = document.getElementById('e-title').value.trim();
   const verse = document.getElementById('e-verse').innerHTML.trim();
   const analysis = document.getElementById('e-analysis').innerHTML.trim();
   if (!ref || !title) { alert('Cần nhập Tham chiếu và Tiêu đề'); return; }
-
+ 
   if (editNew) {
     const id = 'c' + Date.now();
     data.tabs[curTab].cards.push({ id, ref, title, verse, analysis });
@@ -1258,19 +1260,19 @@ function saveCard() {
   }
   save(); cancelEdit(); curFace = 1; renderAll();
 }
-
+ 
 function deleteCard() {
   if (!editId || !confirm('Xóa thẻ này?')) return;
   data.tabs[curTab].cards = data.tabs[curTab].cards.filter(c => c.id !== editId);
   if (curCard >= data.tabs[curTab].cards.length) curCard = Math.max(0, data.tabs[curTab].cards.length - 1);
   save(); cancelEdit(); renderAll();
 }
-
+ 
 function cancelEdit() {
   editId = null; editNew = false;
   document.getElementById('edit-panel').classList.add('hidden');
 }
-
+ 
 // ── KEYBOARD ──────────────────────────────────────────────────────
 document.addEventListener('keydown', e => {
   const tag = e.target.tagName;
@@ -1287,12 +1289,12 @@ document.addEventListener('keydown', e => {
   if (e.key === '3') mark('h');
   if (e.key === 'Escape') { cancelEdit(); document.getElementById('modal').classList.add('hidden'); }
 });
-
+ 
 document.getElementById('modal-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') modalConfirm();
   if (e.key === 'Escape') modalCancel();
 });
-
+ 
 // ── EXPORT / IMPORT ───────────────────────────────────────────────
 function exportData() {
   const payload = { data, status, exportedAt: new Date().toISOString() };
@@ -1304,7 +1306,7 @@ function exportData() {
   a.click();
   URL.revokeObjectURL(a.href);
 }
-
+ 
 function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -1328,21 +1330,47 @@ function importData(event) {
   reader.readAsText(file);
   event.target.value = '';
 }
-
+ 
 // ── RENDER ALL ────────────────────────────────────────────────────
 function renderAll() {
   renderTabs();
   renderStudy();
   renderList();
+  applyMode();
 }
-
+ 
+// ── MODE: view vs admin ───────────────────────────────────────────
+let isAdmin = false;
+ 
+function applyMode() {
+  // Elements only visible to admin
+  const adminEls = document.querySelectorAll('.admin-only');
+  adminEls.forEach(el => {
+    el.style.display = isAdmin ? '' : 'none';
+  });
+  // List edit buttons
+  document.querySelectorAll('.list-btn').forEach(btn => {
+    btn.style.display = isAdmin ? '' : 'none';
+  });
+  // Panel header add button
+  const addBtn = document.querySelector('.panel-header button');
+  if (addBtn) addBtn.style.display = isAdmin ? '' : 'none';
+}
+ 
 // ── PASSWORD ──────────────────────────────────────────────────────
 function checkPw() {
   const input = document.getElementById('pw-input').value;
   const inputEl = document.getElementById('pw-input');
   const errEl = document.getElementById('pw-err');
-  if (input === 'dongan') {
-    try { sessionStorage.setItem('kh_auth', '1'); } catch(e) {}
+ 
+  if (input === 'donganadmin') {
+    isAdmin = true;
+    try { sessionStorage.setItem('kh_auth', 'admin'); } catch(e) {}
+    document.getElementById('pw-screen').style.display = 'none';
+    renderAll();
+  } else if (input === 'dongan') {
+    isAdmin = false;
+    try { sessionStorage.setItem('kh_auth', 'view'); } catch(e) {}
     document.getElementById('pw-screen').style.display = 'none';
     renderAll();
   } else {
@@ -1353,15 +1381,21 @@ function checkPw() {
     setTimeout(() => inputEl.classList.remove('error'), 400);
   }
 }
-
+ 
 // Enter key on password input
 document.getElementById('pw-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') checkPw();
   document.getElementById('pw-err').textContent = '';
 });
-
+ 
 // Boot — check session
-if (sessionStorage.getItem('kh_auth') === '1') {
+const savedAuth = sessionStorage.getItem('kh_auth');
+if (savedAuth === 'admin') {
+  isAdmin = true;
+  document.getElementById('pw-screen').style.display = 'none';
+  renderAll();
+} else if (savedAuth === 'view') {
+  isAdmin = false;
   document.getElementById('pw-screen').style.display = 'none';
   renderAll();
 } else {
@@ -1370,3 +1404,4 @@ if (sessionStorage.getItem('kh_auth') === '1') {
 </script>
 </body>
 </html>
+ 
